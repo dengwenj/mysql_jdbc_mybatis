@@ -82,7 +82,7 @@ use mydb2;
 * 可进行加减乘除 + - * /
 * 注意：% 是占位符，而非模运算符
 
-### 列的别名c
+### 列的别名
 * 列 as '列名'
 * select first_name as '姓名' from t_employees;
 
@@ -101,3 +101,52 @@ use mydb2;
 ### 依据多列排序
 * select employee_id, salary from t_employees order by salary desc, employee_id asc;
 * order by salary desc, employee_id asc：前面的列有相同的值了，在按照后面的排序规则进行排序
+
+### 条件查询
+* select 列名 from 表名 where 条件
+* where 条件：在查询结果中，筛选符合条件的查询结果，条件为布尔表达式
+
+### 等值判断（=）
+* select salary from t_employees where salary = 11000;
+
+### 逻辑判断（and、or、not）
+* select salary from t_employees where salary = 11000 and commission_pct = 0.30;
+* select salary from t_employees where salary = 11000 or commission_pct = 0.30;
+* select salary from t_employees where not salary = 11000;
+
+### 不等值判断（》、《、 》=、《=、!=、《》）
+* select salary from t_employees salary >= 6000 and salary <= 10000;
+
+### 区间判断（between and）
+* select * from t_employees where salary between 6000 and 10000;
+* 注意：在区间判断语法中，小值在前，大值在后，反之，得不到正确结果
+
+### NULL 值判断（IS NULL、IS NOT NULL）
+* select salary from t_employees where commission_pct is null
+* select salary from t_employees where commission_pct is not null
+
+### 枚举查询（IN(值1, 值2, 值3)）
+* select salary from t_employees where department_id in(70, 80, 90)
+* 注意：in 的查询效率较低，可通过多条件拼接
+
+### 模糊查询
+* LIKE_（**单个**任意字符）
+* LIKE%（**任意长度**的任意字符）
+* 注意：模糊查询只能和 LIKE 关键字结合使用
+* select salary from t_employees where first_name LIKE 'L%'; 开头为 L 的任意长度任意字符
+* select salary from t_employees where first_name LIKE 'L_'; 开头为 L 的单个长度任意字符
+* select salary from t_employees where first_name LIKE '%L%'; 只要有 L 就可以
+
+### 分支结构查询
+```mysql
+SELECT EMPLOYEE_ID, FIRST_NAME, SALARY,
+       CASE
+           WHEN SALARY >= 10000 THEN 'A'
+           WHEN SALARY >= 6000 AND SALARY < 10000 THEN 'B'
+           ELSE 'C'
+       END AS '薪资等级'
+FROM t_employees;
+```
+* 注意：通过使用 CASE END 进行条件判断，每条数据对应生成一个值
+* 类似 java 中 switch
+* case end 会产生一个结果，会生成一个独立的列
