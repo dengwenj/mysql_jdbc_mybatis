@@ -59,3 +59,33 @@ select database();
 ```mysql
 use mydb2;
 ```
+
+### 数据查询
+* 数据库表的基本结构：关系结构数据库是以表格（table）进行数据存储，表格由“行”和“列”组成
+* 执行查询语句返回的结果集是一张虚拟表
+
+### 基本查询
+* select 列名 from 表名;
+* select：指定要查询的列
+* from：指定要查询的表
+
+### 查询部分列
+* select employee_id, first_name from t_employees;
+
+### 查询所有列
+* select 所有列的列名 from t_employees;
+* select * from t_employees;
+* 生产环境下，优先使用列名查询。*的方式需转换成全列名，效率低，可读性差
+
+### 对列中的数据进行运算
+* select employee_id, first_name, salary*12 from t_employees; 
+* 可进行加减乘除 + - * /
+* 注意：% 是占位符，而非模运算符
+
+### 列的别名c
+* 列 as '列名'
+* select first_name as '姓名' from t_employees;
+
+### 查询结果去重
+* distinct 列名
+* select distinct manager_id from t_employees;
