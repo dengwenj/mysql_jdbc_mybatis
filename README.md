@@ -89,3 +89,15 @@ use mydb2;
 ### 查询结果去重
 * distinct 列名
 * select distinct manager_id from t_employees;
+
+### 排序查询
+* select 列名 from 表名 order by 排序列 【排序规则】
+* ASC：对前面排序列做升序排序
+* DESC：对前面排序列做降序排序
+
+### 依据单列排序
+* select employee_id, salary from t_employees order by salary desc; # 根据薪资从降序排序
+
+### 依据多列排序
+* select employee_id, salary from t_employees order by salary desc, employee_id asc;
+* order by salary desc, employee_id asc：前面的列有相同的值了，在按照后面的排序规则进行排序
