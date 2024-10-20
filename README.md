@@ -27,3 +27,35 @@
 * mysql：核心数据库，主要负责存储数据库的用户、权限设置、关键字等。以及需要使用的控制和管理信息，不可以删除
 * performance_schema：性能优化的数据库，MySQL5.5 版本中新增的一个性能优化的引擎
 * sys：系统数据库，MySQL5.7 版本中新增的可以快速的了解元数据信息的系统库，便于发现数据库的多样信息，解决性能瓶颈问题
+
+### 创建自定义数据库
+```mysql
+create database mydb1; # 创建 mydb 数据库
+create database mydb2 character set gbk; # 创建数据库并设置编码格式为 gbk，如果不设置编码格式按照电脑默认的编码格式
+create database if not exists mydb2; # 如果 mydb2 数据库不存在，则创建，反之不创建
+```
+
+### 查看数据库创建信息
+```mysql
+show create database mydb2; # 查看创建数据库是的基本信息
+```
+
+### 修改数据库
+```mysql
+alter database mydb2 character set utf8;
+```
+
+### 删除数据库
+```mysql
+drop database mydb2;
+```
+
+### 查看当前所有用的数据库
+```mysql
+select database();
+```
+
+### 使用数据库
+```mysql
+use mydb2;
+```
