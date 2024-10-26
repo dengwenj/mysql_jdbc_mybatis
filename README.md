@@ -196,8 +196,9 @@ SELECT SUBSTRING('你好啊朴睦', 4, 2) # 朴睦
 * AVG()：平均值
 * MAX()：最大值
 * MIN()：最小值
-* COUNT()：求总行数
+* COUNT()：求总行数。分组了话就是查询的每组的总数
 * 聚合函数自动忽略 null 值，不进行统计
+* 默认聚合列不能和非聚合列查询，要想查询加上分组 group by
 ```mysql
 SELECT SUM(SALARY) FROM t_employees;
 SELECT AVG(SALARY) FROM t_employees;
@@ -206,4 +207,31 @@ SELECT MIN(SALARY + 0) FROM t_employees;
 SELECT COUNT(EMPLOYEE_ID) FROM t_employees;
 -- 统计有提成的人数 聚合函数自动忽略 null 值，不进行统计
 SELECT COUNT(COMMISSION_PCT) FROM t_employees;
+```
+
+### 分组查询（分组一般和聚合函数一起使用）
+* 语法：select 列名 from 表名 where 条件 group by 分组依据(列);
+* 关键字：group by  说明：分组依据，必须在 where 之后生效
+* 常见问题：分组查询中，select 显示的列只能是分组依据列，或者聚合函数列，不能出现其他列，不然会出现问题
+```mysql
+-- 分组查询
+# 查询各部门的总人数
+SELECT DEPARTMENT_ID, COUNT(EMPLOYEE_ID) 
+FROM t_employees 
+GROUP BY DEPARTMENT_ID;
+
+# 查询各个部门，各个岗位的人数
+SELECT DEPARTMENT_ID, JOB_ID, COUNT(*)
+FROM t_employees
+GROUP BY DEPARTMENT_ID, JOB_ID;
+```
+
+### 分组过滤查询
+* 语法：SELECT 列名 from 表名 where 条件 group by 分组列 HAVING 过滤规则
+```mysql
+# 统计部门的最高工资 （统计 60、70、90 号部门的最高工资）
+SELECT DEPARTMENT_ID, MAX(SALARY)
+FROM t_employees
+GROUP BY DEPARTMENT_ID
+HAVING DEPARTMENT_ID IN(60, 70, 90);
 ```
