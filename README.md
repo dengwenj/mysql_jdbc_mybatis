@@ -150,3 +150,26 @@ FROM t_employees;
 * 注意：通过使用 CASE END 进行条件判断，每条数据对应生成一个值
 * 类似 java 中 switch
 * case end 会产生一个结果，会生成一个独立的列
+
+### 时间查询
+* 语法：select 事件函数(参数列表)
+```mysql
+-- 获取当前系统时间
+SELECT SYSDATE();
+-- 获取当前日期
+SELECT CURDATE();
+-- 获取当前时间
+SELECT CURTIME();
+-- 获取指定日期为一年中的第几周
+SELECT WEEK('2024-10-26'); # 42 周
+-- 获取指定日期的年份
+SELECT YEAR(SYSDATE());
+-- 获取指定时间的小时值
+SELECT HOUR(CURTIME());
+-- 获取指定日期的分钟值
+SELECT MINUTE(CURTIME());
+-- 获取 date1 和 date2 之间相隔的天数
+SELECT DATEDIFF('2024-10-26', '2024-05-10'); # 169 天
+-- 计算 date 加上 n 天后的日期 
+SELECT ADDDATE('2024-10-26','40'); # 2024-12-05
+```
