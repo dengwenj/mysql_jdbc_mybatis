@@ -181,10 +181,29 @@ SELECT ADDDATE('2024-10-26','40'); # 2024-12-05
 -- 将多个字符串拼接
 SELECT CONCAT('你好','世界','哈哈'); # 你好世界哈哈
 SELECT CONCAT(FIRST_NAME,LAST_NAME) as '姓名' FROM t_employees;
--- INSERT(str,pos,len,newStr) 将 str 中指定 pos 位置开始 len 长度的内容替换成 newStr
+-- INSERT(str,pos,len,newStr) 将 str 中指定 pos 位置开始 len 长度的内容替换成 newStr (替换)
 SELECT INSERT('这是一个数据库', 3, 2, 'mysql') # 这是mysql数据库
 SELECT LOWER('MYSQL'); # mysql
 SELECT UPPER('mysql'); # MYSQL
--- SUBSTRING(str, num, len) 将 str 字符串指定 num 位置开始截取 len 个内容
+-- SUBSTRING(str, num, len) 将 str 字符串指定 num 位置开始截取 len 个内容 (截取)
 SELECT SUBSTRING('你好啊朴睦', 4, 2) # 朴睦
+```
+
+### 聚合函数（对列进行操作的)
+* 语法：select 聚合函数(列名) from 表名;
+* 对多条数据的**单列**进行统计，返回统计后的一行结果
+* SUM()：求所有行中单列结果的总和
+* AVG()：平均值
+* MAX()：最大值
+* MIN()：最小值
+* COUNT()：求总行数
+* 聚合函数自动忽略 null 值，不进行统计
+```mysql
+SELECT SUM(SALARY) FROM t_employees;
+SELECT AVG(SALARY) FROM t_employees;
+SELECT MAX(SALARY + 0) FROM t_employees;
+SELECT MIN(SALARY + 0) FROM t_employees;
+SELECT COUNT(EMPLOYEE_ID) FROM t_employees;
+-- 统计有提成的人数 聚合函数自动忽略 null 值，不进行统计
+SELECT COUNT(COMMISSION_PCT) FROM t_employees;
 ```
