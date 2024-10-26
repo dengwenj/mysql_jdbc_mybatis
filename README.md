@@ -151,6 +151,7 @@ FROM t_employees;
 * 类似 java 中 switch
 * case end 会产生一个结果，会生成一个独立的列
 
+### 任何一个函数都是可以对表进行应用操作，可以生成独立的一个列
 ### 时间查询
 * 语法：select 事件函数(参数列表)
 ```mysql
@@ -172,4 +173,18 @@ SELECT MINUTE(CURTIME());
 SELECT DATEDIFF('2024-10-26', '2024-05-10'); # 169 天
 -- 计算 date 加上 n 天后的日期 
 SELECT ADDDATE('2024-10-26','40'); # 2024-12-05
+```
+
+### 字符串查询 
+* 语法：SELECT 字符串函数(参数列表)
+```mysql
+-- 将多个字符串拼接
+SELECT CONCAT('你好','世界','哈哈'); # 你好世界哈哈
+SELECT CONCAT(FIRST_NAME,LAST_NAME) as '姓名' FROM t_employees;
+-- INSERT(str,pos,len,newStr) 将 str 中指定 pos 位置开始 len 长度的内容替换成 newStr
+SELECT INSERT('这是一个数据库', 3, 2, 'mysql') # 这是mysql数据库
+SELECT LOWER('MYSQL'); # mysql
+SELECT UPPER('mysql'); # MYSQL
+-- SUBSTRING(str, num, len) 将 str 字符串指定 num 位置开始截取 len 个内容
+SELECT SUBSTRING('你好啊朴睦', 4, 2) # 朴睦
 ```
