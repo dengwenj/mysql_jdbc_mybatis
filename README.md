@@ -235,3 +235,25 @@ FROM t_employees
 GROUP BY DEPARTMENT_ID
 HAVING DEPARTMENT_ID IN(60, 70, 90);
 ```
+
+### 限定查询
+* SELECT 列名 FROM 表名 LIMIT 起始行, 查询行数;
+* LIMIT offset_start, row_count 限定查询结果的起始行和总行数
+```mysql
+# 限定查询，从零开始的
+SELECT * FROM t_employees LIMIT 0, 5;
+SELECT * FROM t_employees LIMIT 3, 10;
+```
+* 在分页应用场景中，起始行是变化的，但是一页显示的条数是不变的
+
+### 查询总结
+* SQL 语句编写顺序：SELECT 列名 表名 WHERE 条件 GROUP BY 分组依据(列) HAVING 过滤条件 ORDER BY 排序列 asc|desc LIMIT 起始行, 总条数;
+
+### SQL 语句执行顺序
+* FROM：指定数据来源表
+* WHERE：对查询数据做第一次过滤
+* GROUP BY：分组
+* HAVING：对分组后的数据第二次过滤
+* SELECT：查询各字段的值
+* ORDER BY：排序
+* LIMIT：限定查询结果
