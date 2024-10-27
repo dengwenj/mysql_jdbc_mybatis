@@ -257,3 +257,28 @@ SELECT * FROM t_employees LIMIT 3, 10;
 * SELECT：查询各字段的值
 * ORDER BY：排序
 * LIMIT：限定查询结果
+
+### 子查询（作为条件判断）
+* SELECT 列名 FROM 表名 WHERE 条件（子查询结果）
+* 注意: 将子查询 ”一行一列“ 的结果作为外部查询的条件，做第二次查询
+* 子查询得到一行一列的结果才能作为外部查询的等值判断条件或不等值条件判断
+```mysql
+-- 查询工资大于 Bruce 的员工信息
+SELECT * FROM t_employees WHERE SALARY > (SELECT SALARY FROM t_employees WHERE FIRST_NAME = 'Bruce')
+```
+
+### 子查询（作为枚举查询条件）
+* SELECT 列名 FROM 表名 WHERE 列名 in(子查询结果)
+* 将子查询 ”多行一列“ 的结果作为外部查询的枚举查询条件，做第二次查询
+```mysql
+-- 查询与名为 King 同一部门的员工信息
+SELECT * FROM t_employees WHERE DEPARTMENT_ID IN(
+	SELECT DEPARTMENT_ID FROM t_employees WHERE LAST_NAME = 'King'
+);
+```
+* 当子查询结果集形式为多行单列时可以使用 ANY(任意) 或 ALL(全部) 关键字
+```mysql
+-- 工资高于 60部门所有人的信息
+SELECT * FROM t_employees WHERE SALARY > ALL(SELECT SALARY FROM t_employees WHERE DEPARTMENT_ID = '60')
+SELECT * FROM t_employees WHERE SALARY > ANY(SELECT SALARY FROM t_employees WHERE DEPARTMENT_ID = '60')
+```
