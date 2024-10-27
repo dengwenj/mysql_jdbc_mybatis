@@ -302,3 +302,25 @@ SELECT FIRST_NAME FROM (
 SELECT * FROM t_departments UNION SELECT * FROM t_jobs;
 SELECT * FROM t_departments UNION ALL SELECT * FROM t_jobs;
 ```
+
+### 表连接查询（多表查询）
+* SELECT 列名 FROM 表1 连接方式 表2 ON 连接条件
+
+### 内连接查询（INNER JOIN   ON）
+* 返回两个或多个表中有匹配的记录。只有在两个表中都有匹配的行才会出现在结果集中。
+```mysql
+# 方式一
+SELECT EMPLOYEE_ID, t_employees.JOB_ID, t_jobs.JOB_TITLE FROM t_employees 
+INNER JOIN t_jobs 
+ON t_employees.JOB_ID = t_jobs.JOB_ID
+# 方式二
+SELECT * FROM t_employees, t_jobs WHERE t_employees.JOB_ID = t_jobs.JOB_ID;
+```
+* 在 MySQL 中，第二种方式也可以作为内连接查询，但不符合 SQL 标准
+* 而第一种属于 SQL 标准，与其他关系型数据库通用
+```mysql
+-- 三表查询： 查询所有员工工号，名字，部门名称，部门所在国家ID
+SELECT * FROM t_employees
+INNER JOIN t_departments ON t_employees.DEPARTMENT_ID = t_departments.DEPARTMENT_ID
+INNER JOIN t_locations ON t_departments.LOCATION_ID = t_locations.LOCATION_ID;
+```
