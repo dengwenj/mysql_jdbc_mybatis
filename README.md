@@ -305,6 +305,7 @@ SELECT * FROM t_departments UNION ALL SELECT * FROM t_jobs;
 
 ### 表连接查询（多表查询）
 * SELECT 列名 FROM 表1 连接方式 表2 ON 连接条件
+* 如果不指定连接条件，则会造成笛卡尔积的结果
 
 ### 内连接查询（INNER JOIN   ON）
 * 返回两个或多个表中有匹配的记录。只有在两个表中都有匹配的行才会出现在结果集中。
@@ -324,3 +325,22 @@ SELECT * FROM t_employees
 INNER JOIN t_departments ON t_employees.DEPARTMENT_ID = t_departments.DEPARTMENT_ID
 INNER JOIN t_locations ON t_departments.LOCATION_ID = t_locations.LOCATION_ID;
 ```
+
+### 左外连接（left loin on）
+* 左外连接，是以左表为主表，依次向右匹配，匹配到，返回结果，匹配不到，返回 NULL 值填充
+```mysql
+SELECT * FROM t_employees
+LEFT JOIN t_departments ON t_employees.DEPARTMENT_ID = t_departments.DEPARTMENT_ID;
+```
+
+### 右外连接（right join on）
+* 右外连接，是以右表为主表，依次向左匹配，匹配到，返回结果，匹配不到，则返回 NULL 值填充
+```mysql
+SELECT * FROM t_employees
+RIGHT JOIN t_departments ON t_employees.DEPARTMENT_ID = t_departments.DEPARTMENT_ID;
+```
+
+### 内连接、外连接
+* 内连接：只选择两个表中有匹配的记录
+* 左外连接：选择左表的所有记录，即使右表中没有匹配，右表中没有匹配到，不会出现在查询的表中
+* 右外连接：选择右表的所有记录，即使左表中没有匹配，左表中没有匹配到，不会出现在查询的表中
