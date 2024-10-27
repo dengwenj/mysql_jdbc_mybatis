@@ -282,3 +282,13 @@ SELECT * FROM t_employees WHERE DEPARTMENT_ID IN(
 SELECT * FROM t_employees WHERE SALARY > ALL(SELECT SALARY FROM t_employees WHERE DEPARTMENT_ID = '60')
 SELECT * FROM t_employees WHERE SALARY > ANY(SELECT SALARY FROM t_employees WHERE DEPARTMENT_ID = '60')
 ```
+
+### 子查询（作为一张表）
+* SELECT 列名 FROM （子查询的结果集）WHERE 条件;
+```mysql
+SELECT FIRST_NAME FROM (
+	SELECT * FROM t_employees ORDER BY SALARY DESC
+) AS temp LIMIT 0,5
+```
+* 将子查询 "多行多列" 的结果作为外部查询的一张表，做第二次查询
+* 注意：子查询作为临时表，为其赋予一个临时表名
