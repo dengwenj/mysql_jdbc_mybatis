@@ -292,3 +292,13 @@ SELECT FIRST_NAME FROM (
 ```
 * 将子查询 "多行多列" 的结果作为外部查询的一张表，做第二次查询
 * 注意：子查询作为临时表，为其赋予一个临时表名
+
+### 合并查询（结果集作为合并）
+* SELECT * FROM 表名1 UNION SELECT * FROM 表名2;
+* SELECT * FROM 表名1 UNION ALL SELECT * FROM 表名2;
+* 合并结果的两张表，列数必须相同，列的数据类型可以不同
+* UNION 去除重复项(全部重复)，UNION ALL 不去除重复项
+```mysql
+SELECT * FROM t_departments UNION SELECT * FROM t_jobs;
+SELECT * FROM t_departments UNION ALL SELECT * FROM t_jobs;
+```
