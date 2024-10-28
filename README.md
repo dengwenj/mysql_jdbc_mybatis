@@ -29,34 +29,34 @@
 * sys：系统数据库，MySQL5.7 版本中新增的可以快速的了解元数据信息的系统库，便于发现数据库的多样信息，解决性能瓶颈问题
 
 ### 创建自定义数据库
-```mysql
+```text
 create database mydb1; # 创建 mydb 数据库
 create database mydb2 character set gbk; # 创建数据库并设置编码格式为 gbk，如果不设置编码格式按照电脑默认的编码格式
 create database if not exists mydb2; # 如果 mydb2 数据库不存在，则创建，反之不创建
 ```
 
 ### 查看数据库创建信息
-```mysql
+```text
 show create database mydb2; # 查看创建数据库是的基本信息
 ```
 
 ### 修改数据库
-```mysql
+```text
 alter database mydb2 character set utf8;
 ```
 
 ### 删除数据库
-```mysql
+```text
 drop database mydb2;
 ```
 
 ### 查看当前所有用的数据库
-```mysql
+```text
 select database();
 ```
 
 ### 使用数据库
-```mysql
+```text
 use mydb2;
 ```
 
@@ -138,7 +138,7 @@ use mydb2;
 * select salary from t_employees where first_name LIKE '%L%'; 只要有 L 就可以
 
 ### 分支结构查询
-```mysql
+```text
 SELECT EMPLOYEE_ID, FIRST_NAME, SALARY,
        CASE
            WHEN SALARY >= 10000 THEN 'A'
@@ -154,7 +154,7 @@ FROM t_employees;
 ### 任何一个函数都是可以对表进行应用操作，可以生成独立的一个列
 ### 时间查询
 * 语法：select 事件函数(参数列表)
-```mysql
+```text
 -- 获取当前系统时间
 SELECT SYSDATE();
 -- 获取当前日期
@@ -177,7 +177,7 @@ SELECT ADDDATE('2024-10-26','40'); # 2024-12-05
 
 ### 字符串查询 
 * 语法：SELECT 字符串函数(参数列表)
-```mysql
+```text
 -- 将多个字符串拼接
 SELECT CONCAT('你好','世界','哈哈'); # 你好世界哈哈
 SELECT CONCAT(FIRST_NAME,LAST_NAME) as '姓名' FROM t_employees;
@@ -199,7 +199,7 @@ SELECT SUBSTRING('你好啊朴睦', 4, 2) # 朴睦
 * COUNT()：求总行数。分组了话就是查询的每组的总数
 * 聚合函数自动忽略 null 值，不进行统计
 * 默认聚合列不能和非聚合列查询，要想查询加上分组 group by
-```mysql
+```text
 SELECT SUM(SALARY) FROM t_employees;
 SELECT AVG(SALARY) FROM t_employees;
 SELECT MAX(SALARY + 0) FROM t_employees;
@@ -213,7 +213,7 @@ SELECT COUNT(COMMISSION_PCT) FROM t_employees;
 * 语法：select 列名 from 表名 where 条件 group by 分组依据(列);
 * 关键字：group by  说明：分组依据，必须在 where 之后生效
 * 常见问题：分组查询中，select 显示的列只能是分组依据列，或者聚合函数列，不能出现其他列，不然会出现问题
-```mysql
+```text
 -- 分组查询
 # 查询各部门的总人数
 SELECT DEPARTMENT_ID, COUNT(EMPLOYEE_ID) 
@@ -228,7 +228,7 @@ GROUP BY DEPARTMENT_ID, JOB_ID;
 
 ### 分组过滤查询
 * 语法：SELECT 列名 from 表名 where 条件 group by 分组列 HAVING 过滤规则
-```mysql
+```text
 # 统计部门的最高工资 （统计 60、70、90 号部门的最高工资）
 SELECT DEPARTMENT_ID, MAX(SALARY)
 FROM t_employees
@@ -239,7 +239,7 @@ HAVING DEPARTMENT_ID IN(60, 70, 90);
 ### 限定查询
 * SELECT 列名 FROM 表名 LIMIT 起始行, 查询行数;
 * LIMIT offset_start, row_count 限定查询结果的起始行和总行数
-```mysql
+```text
 # 限定查询，从零开始的
 SELECT * FROM t_employees LIMIT 0, 5;
 SELECT * FROM t_employees LIMIT 3, 10;
@@ -262,7 +262,7 @@ SELECT * FROM t_employees LIMIT 3, 10;
 * SELECT 列名 FROM 表名 WHERE 条件（子查询结果）
 * 注意: 将子查询 ”一行一列“ 的结果作为外部查询的条件，做第二次查询
 * 子查询得到一行一列的结果才能作为外部查询的等值判断条件或不等值条件判断
-```mysql
+```text
 -- 查询工资大于 Bruce 的员工信息
 SELECT * FROM t_employees WHERE SALARY > (SELECT SALARY FROM t_employees WHERE FIRST_NAME = 'Bruce')
 ```
@@ -270,14 +270,14 @@ SELECT * FROM t_employees WHERE SALARY > (SELECT SALARY FROM t_employees WHERE F
 ### 子查询（作为枚举查询条件）
 * SELECT 列名 FROM 表名 WHERE 列名 in(子查询结果)
 * 将子查询 ”多行一列“ 的结果作为外部查询的枚举查询条件，做第二次查询
-```mysql
+```text
 -- 查询与名为 King 同一部门的员工信息
 SELECT * FROM t_employees WHERE DEPARTMENT_ID IN(
 	SELECT DEPARTMENT_ID FROM t_employees WHERE LAST_NAME = 'King'
 );
 ```
 * 当子查询结果集形式为多行单列时可以使用 ANY(任意) 或 ALL(全部) 关键字
-```mysql
+```text
 -- 工资高于 60部门所有人的信息
 SELECT * FROM t_employees WHERE SALARY > ALL(SELECT SALARY FROM t_employees WHERE DEPARTMENT_ID = '60')
 SELECT * FROM t_employees WHERE SALARY > ANY(SELECT SALARY FROM t_employees WHERE DEPARTMENT_ID = '60')
@@ -285,7 +285,7 @@ SELECT * FROM t_employees WHERE SALARY > ANY(SELECT SALARY FROM t_employees WHER
 
 ### 子查询（作为一张表）
 * SELECT 列名 FROM （子查询的结果集）WHERE 条件;
-```mysql
+```text
 SELECT FIRST_NAME FROM (
 	SELECT * FROM t_employees ORDER BY SALARY DESC
 ) AS temp LIMIT 0,5
@@ -298,7 +298,7 @@ SELECT FIRST_NAME FROM (
 * SELECT * FROM 表名1 UNION ALL SELECT * FROM 表名2;
 * 合并结果的两张表，列数必须相同，列的数据类型可以不同
 * UNION 去除重复项(全部重复)，UNION ALL 不去除重复项
-```mysql
+```text
 SELECT * FROM t_departments UNION SELECT * FROM t_jobs;
 SELECT * FROM t_departments UNION ALL SELECT * FROM t_jobs;
 ```
@@ -309,7 +309,7 @@ SELECT * FROM t_departments UNION ALL SELECT * FROM t_jobs;
 
 ### 内连接查询（INNER JOIN   ON）
 * 返回两个或多个表中有匹配的记录。只有在两个表中都有匹配的行才会出现在结果集中。
-```mysql
+```text
 # 方式一
 SELECT EMPLOYEE_ID, t_employees.JOB_ID, t_jobs.JOB_TITLE FROM t_employees 
 INNER JOIN t_jobs 
@@ -319,23 +319,23 @@ SELECT * FROM t_employees, t_jobs WHERE t_employees.JOB_ID = t_jobs.JOB_ID;
 ```
 * 在 MySQL 中，第二种方式也可以作为内连接查询，但不符合 SQL 标准
 * 而第一种属于 SQL 标准，与其他关系型数据库通用
-```mysql
+```text
 -- 三表查询： 查询所有员工工号，名字，部门名称，部门所在国家ID
 SELECT * FROM t_employees
 INNER JOIN t_departments ON t_employees.DEPARTMENT_ID = t_departments.DEPARTMENT_ID
 INNER JOIN t_locations ON t_departments.LOCATION_ID = t_locations.LOCATION_ID;
 ```
 
-### 左外连接（left loin on）
+### 左外连接（left join on）
 * 左外连接，是以左表为主表，依次向右匹配，匹配到，返回结果，匹配不到，返回 NULL 值填充
-```mysql
+```text
 SELECT * FROM t_employees
 LEFT JOIN t_departments ON t_employees.DEPARTMENT_ID = t_departments.DEPARTMENT_ID;
 ```
 
 ### 右外连接（right join on）
 * 右外连接，是以右表为主表，依次向左匹配，匹配到，返回结果，匹配不到，则返回 NULL 值填充
-```mysql
+```text
 SELECT * FROM t_employees
 RIGHT JOIN t_departments ON t_employees.DEPARTMENT_ID = t_departments.DEPARTMENT_ID;
 ```
@@ -344,3 +344,12 @@ RIGHT JOIN t_departments ON t_employees.DEPARTMENT_ID = t_departments.DEPARTMENT
 * 内连接：只选择两个表中有匹配的记录
 * 左外连接：选择左表的所有记录，即使右表中没有匹配，右表中没有匹配到，不会出现在查询的表中
 * 右外连接：选择右表的所有记录，即使左表中没有匹配，左表中没有匹配到，不会出现在查询的表中
+
+### 新增（INSERT）
+* INSERT INTO 表名 (列1, 列2, 列3...) VALUES (值1, 值2, 值3);
+* 注意：表名后的列名和 VALUES 里的值要一一对应（个数、顺序、类型）
+```text
+INSERT INTO t_jobs (JOB_ID, JOB_TITLE, MIN_SALARY, MAX_SALARY) VALUES ('go', 'golang', 10000, 50000);
+
+-- INSERT INTO 表名 (列...) VALUES (值...)
+```
