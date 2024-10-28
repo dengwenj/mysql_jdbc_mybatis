@@ -409,7 +409,7 @@ CREATE TABLE 表名 (
 )【charset=utf8】
 ```
 
-### 数据表的操作（ALTER）
+###  
 * alter table 表名 操作;
 
 ### 向现有表中添加列
@@ -446,4 +446,26 @@ ALTER TABLE `subject` CHANGE subjectHours classHours INT;
 ALTER TABLE `subject` RENAME sub;
 -- 删除表 
 DROP TABLE sub;
+```
+
+### 实体完整性约束(一行的数据是唯一的)
+* 表中的一行数据代表一个实体（entity），实体完整性的作用即是标识每一行数据不重复、实体唯一
+
+### 主键约束
+* PRIMARY KEY 唯一，标识表中的一行数据，此列的值不可重复，且不能为 NULL
+
+### 唯一约束
+* UNIQUE 唯一，标识表中的一行数据，不可重复，可以为 NULL，unique 可以用在多个列上
+
+### 自动增长列
+* AUTO_INCREMENT 自动增长，给主键数值列添加自动增长，从1开始，每次加1，不能单独使用，和主键配合
+```text
+CREATE TABLE `subject`(
+	subjectId INT PRIMARY KEY AUTO_INCREMENT,
+	subjectName VARCHAR(10) UNIQUE,
+	subjectHours INT
+)
+SELECT * FROM `subject`;
+INSERT INTO `subject`(subjectName, subjectHours) VALUES('Java', 20);
+INSERT INTO `subject`(subjectName, subjectHours) VALUES('JS', 20);
 ```
