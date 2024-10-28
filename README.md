@@ -373,3 +373,28 @@ DELETE FROM t_employees WHERE FIRST_NAME = 'Peter' AND LAST_NAME = 'Hall';
 ### 清空整表数据（TRUNCATE）
 * TRUNCATE TABLE 表名;
 * 注意：与 DELETE 不加 WHERE 删除整表数据不同，TRUNCATE 是把表销毁，再按照原表的格式创建一张新表
+
+### 数据表操作
+### 数据类型
+* MySQL 支持多种类型，大致可以分为三类：数值、日期/时间和字符串(字符)类型，对于我们约束数据的类型有很大的帮助
+
+### 数值类型
+* INT：4字节，大整数值
+* DOUBLE：8字节，双精度浮点数值
+* DOUBLE(M,D)：8个字节，M表示长度，D表示小数位数，DOUBLE(5, 2) -999.99 ~ 999.99，双精度浮点数值
+* decimal(M,D)：decimal(5, 2) -999.99 ~ 999.99，小数值
+
+### 日期类型
+* DATE：格式YYYY-MM-DD 日期值
+* TIME：HH:MM:SS 时间值或持续时间
+* YEAR：YYYY 混合日期和时间值
+* DATETIME：YYYY-MM-DD HH:MM:SS 混合日期和时间值
+* TIMESTAMP：YYYYMMDDHHMMSS 混合日期和时间值，时间戳
+
+### 字符串类型
+* CHAR：0-255字符，定长字符串 char(10) 10个字符
+* VARCHAR：0-65535 字符，变长字符串 varchar(10) 10个字符
+* BLOB(binary large object)：0-65535 字节，二进制形式的长文本数据
+* TEXT：0-65535 字符，长文本数据
+* CHAR 和 VARCHAR 类型类似，但它们保存和检索的方式不同。它们的最大长度和 是否尾部空格被保留等方面也不同。在存储或检索过程中不进行大小写转换
+* BLOB 是一个二进制大对象，可以容纳可变数据的数据。有四种 BLOB 类型：TINYBLOB、BLOB、MEDIUMBLOB 和 LONGBLOB。它们只是可容纳值的最大长度不同
