@@ -398,3 +398,52 @@ DELETE FROM t_employees WHERE FIRST_NAME = 'Peter' AND LAST_NAME = 'Hall';
 * TEXT：0-65535 字符，长文本数据
 * CHAR 和 VARCHAR 类型类似，但它们保存和检索的方式不同。它们的最大长度和 是否尾部空格被保留等方面也不同。在存储或检索过程中不进行大小写转换
 * BLOB 是一个二进制大对象，可以容纳可变数据的数据。有四种 BLOB 类型：TINYBLOB、BLOB、MEDIUMBLOB 和 LONGBLOB。它们只是可容纳值的最大长度不同
+
+### 数据表的创建（CREATE）
+```text
+CREATE TABLE 表名 (
+    列名 数据类型【约束】,
+    列名 数据类型【约束】,
+    ...
+    列名 数据类型【约束】 最后一列的末尾不加逗号
+)【charset=utf8】
+```
+
+### 数据表的操作（ALTER）
+* alter table 表名 操作;
+
+### 向现有表中添加列
+* alter table 表名 add 列名 数据类型...;
+
+### 修改表中的列
+* alter table 表名 modify subjectName varchar(10);
+* 注意：修改表中的某列时，也要写全列的名字，数据类型，约束
+
+### 删除表中的列
+* alter table 表名 drop subjectName;
+* 注意：删除列时，每次只能删除一列
+
+### 修改列名
+* alter table 表名 change subjectHours classHours int;
+* 注意：修改列名时，在给定列新名称时，要指定列的类型和约束
+* modify 只是修复列的数据类型或约束，change 修改的是列名
+
+### 
+* alter table 表名 rename sub;
+
+### 数据表的删除（DROP）
+* drop table 表名
+```text
+# 向现有表添加列
+alter table `subject` add pumu VARCHAR(10);
+-- 修改表中的列
+alter table `subject` modify subjectName VARCHAR(10);
+-- 删除表中的列
+ALTER TABLE `subject` DROP pumu;
+-- 修改列名
+ALTER TABLE `subject` CHANGE subjectHours classHours INT;
+-- 修改表名
+ALTER TABLE `subject` RENAME sub;
+-- 删除表 
+DROP TABLE sub;
+```
