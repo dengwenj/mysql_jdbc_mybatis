@@ -361,3 +361,15 @@ INSERT INTO t_jobs (JOB_ID, JOB_TITLE, MIN_SALARY, MAX_SALARY) VALUES ('go', 'go
 UPDATE t_employees SET SALARY = '25000' WHERE EMPLOYEE_ID = '100';
 UPDATE t_employees SET JOB_ID = 'AD_VP', SALARY = '30000' WHERE EMPLOYEE_ID = '103';
 ```
+
+### 删除（DELETE）
+* DELETE FROM 表名 WHERE 条件;
+* 注意：删除时，若不加 WHERE 条件，，删除的是整张表的数据
+```text
+DELETE FROM t_employees WHERE EMPLOYEE_ID = '107';
+DELETE FROM t_employees WHERE FIRST_NAME = 'Peter' AND LAST_NAME = 'Hall';
+```
+
+### 清空整表数据（TRUNCATE）
+* TRUNCATE TABLE 表名;
+* 注意：与 DELETE 不加 WHERE 删除整表数据不同，TRUNCATE 是把表销毁，再按照原表的格式创建一张新表
