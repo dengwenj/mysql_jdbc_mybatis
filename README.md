@@ -469,3 +469,37 @@ SELECT * FROM `subject`;
 INSERT INTO `subject`(subjectName, subjectHours) VALUES('Java', 20);
 INSERT INTO `subject`(subjectName, subjectHours) VALUES('JS', 20);
 ```
+
+### 域完整性约束
+* 对列的单元格的数据正确性做的维护
+
+### 非空约束
+* NOT NULL 非空，此列必须有值
+
+### 默认值约束
+* default 值 为列赋予默认值，当新增数据不指定值时，书写 DEFAULT，以指定的默认值进行填充
+
+### 引用完整性约束
+* 语法：CONSTRAINT 引用名 FOREIGN KEY（列名）REFERENCES 被引用表名(列名)
+* foreign key 引用外部表的某个列的值，新增数据时，约束此列的值必须是引用表中存在的值
+* 注意：当两张表存在引用关系，要执行删除操作，一定要先删除从表(引用表)，再删除主表（被引用表）
+```text
+CREATE TABLE zy(
+ zyId INT PRIMARY KEY AUTO_INCREMENT,
+ zyName VARCHAR(20) NOT NULL UNIQUE
+)
+SELECT * FROM zy;
+INSERT INTO zy(zyName) VALUES('Java');
+INSERT INTO zy(zyName) VALUES('H5');
+
+CREATE TABLE `subject`(
+	subjectId INT PRIMARY KEY AUTO_INCREMENT,
+	subjectName VARCHAR(10) UNIQUE NOT NULL,
+	subjectHours INT DEFAULT 10,
+	zypmId INT NOT NULL,
+	CONSTRAINT fk_subject_zypmId FOREIGN KEY(zypmId) REFERENCES zy(zyId)
+)
+SELECT * FROM `subject`;
+INSERT INTO `subject`(subjectName, subjectHours, zypmId) VALUES('JavaSE', 20, 1);
+INSERT INTO `subject`(subjectName, subjectHours, zypmId) VALUES('HTML', 10, 2);
+```
