@@ -353,3 +353,11 @@ INSERT INTO t_jobs (JOB_ID, JOB_TITLE, MIN_SALARY, MAX_SALARY) VALUES ('go', 'go
 
 -- INSERT INTO 表名 (列...) VALUES (值...)
 ```
+
+### 修改（UPDATE）
+* UPDATE 表名 SET 列1=新值, 列2=新值,... WHERE 条件;
+* 注意：SET 后多个列名=值，绝大多数情况下都要加 WHERE 条件，指定修改，否则为整表更新
+```text
+UPDATE t_employees SET SALARY = '25000' WHERE EMPLOYEE_ID = '100';
+UPDATE t_employees SET JOB_ID = 'AD_VP', SALARY = '30000' WHERE EMPLOYEE_ID = '103';
+```
