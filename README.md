@@ -552,3 +552,33 @@ revoke all on companydb.* FROM pumu;
 -- 删除用户
 DROP user pumu;
 ```
+
+### 视图
+* 视图，虚拟表，从一个表或多个表中查询出来的表，作用和真实表一样，包含一系列带有行和列的数据。视图中，用户可以使用 select 语句查询数据，
+* 也可以使用 insert、update、delete 修改记录，视图可以使用户操作方便，并保障数据库系统安全
+
+### 视图特点
+* 优点：
+* 1、简单化，数据所见即所得
+* 2、安全性，用户只能查询或修改它们所能见到得到的数据
+* 3、逻辑独立性，可以屏蔽真实表结构变化带来的影响
+* 缺点：
+* 1、性能相对较差，简单的查询也会变得稍显复杂
+* 2、修改不方便，特别是复杂的聚合视图基本无法修改
+
+### 视图的创建
+* 语法：create view 视图名 as 查询数据源表语句;
+```text
+-- 创建视图
+CREATE VIEW testview as SELECT * FROM t_employees;
+-- 使用视图
+SELECT * FROM testview;
+
+CREATE view testview2 as (
+	SELECT EMPLOYEE_ID, t_employees.DEPARTMENT_ID, DEPARTMENT_NAME, t_locations.LOCATION_ID
+	FROM t_employees 
+	INNER JOIN t_departments ON t_employees.DEPARTMENT_ID = t_departments.DEPARTMENT_ID
+	INNER JOIN t_locations ON t_departments.LOCATION_ID = t_locations.LOCATION_ID
+)
+SELECT * FROM testview2;
+```
