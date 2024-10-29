@@ -535,3 +535,20 @@ COMMIT;
 ROLLBACK;
 ```
 * 开启事务后，执行的语句均属于当前事务，成功再执行 commit，失败要进行 rollback
+
+### 权限
+* 创建用户：create user 用户名 identified by 密码;
+* 授权：grant all on 数据库.表 to 用户名; grant all in db.* to `pumu`，将db数据库的所有表授权给pumu
+* 撤销权限：
+* 数据库.表名 from 用户名; 撤销权限后，账户要重新连接客户端才会生效
+* 删除用户：drop user 用户名;
+```text
+-- 创建用户
+CREATE USER pumu IDENTIFIED by '123';
+-- 授权, 允许 pumu 操作 companydb 数据库
+GRANT ALL ON companydb.* TO pumu;
+-- 撤销授权
+revoke all on companydb.* FROM pumu;
+-- 删除用户
+DROP user pumu;
+```
