@@ -513,3 +513,25 @@ INSERT INTO `subject`(subjectName, subjectHours, zypmId) VALUES('HTML', 10, 2);
 * 结束：
 * 1、提交：显示提交 commit，隐式提交：一条创建、删除的语句，正常退出(客户端退出连接)
 * 2、回滚：显示回滚 rollback，隐式回滚：非正常退出（断电、宕机），执行了创建、删除的语句，但是失败了，会为这个无效的语句执行回滚
+
+### 事务的原理
+* 数据库会为每一个客户端都维护一个空间独立的缓存区(回滚区)，一个事务中所有的增删改语句的执行结果都会缓存在回滚段中，
+* 只有到事务中所有 SQL 语句均正常结束(commit)，才会将回滚段中的数据同步到数据库。否则无论因为哪种原因失败，整个事务将回滚(rollback)
+
+### 事务的特性
+* Atomicity(原子性)：表示一个事务内的所有操作是一个整体，要么全部成功，要么全部失败
+* Consistency(一致性)：表示一个事务内有一个操作失败时，所有的更改的数据都必须回滚到修改前状态
+* Isolation(隔离性)：事务查看数据操作时数据所处的状态，要么是另一并发事务修改它之前的状态，要么是另一事务修改它之后的状态，事务不会查看中间状态的数据。不是同一个客户端，事务是隔离的，全部结束后才可以看到
+* Durability(持久性)：持久性事务完成之后，它对于系统的影响是永久性的
+```text
+-- 开启事务
+START TRANSACTION;
+UPDATE account SET money = money - 1000 WHERE id = 1;
+UPDATE account SET money = money + 1000 WHERE id = 2;
+SELECT * FROM account;
+-- 提交事务
+COMMIT;
+-- 回滚事务
+ROLLBACK;
+```
+* 开启事务后，执行的语句均属于当前事务，成功再执行 commit，失败要进行 rollback
