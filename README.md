@@ -503,3 +503,13 @@ SELECT * FROM `subject`;
 INSERT INTO `subject`(subjectName, subjectHours, zypmId) VALUES('JavaSE', 20, 1);
 INSERT INTO `subject`(subjectName, subjectHours, zypmId) VALUES('HTML', 10, 2);
 ```
+* 注意：创建关系表时，一定要先创建主表，再创建从表。删除关系表时，先删除从表，再删除主表
+
+### 事务的概念
+* 事务是一个原子操作。是一个最小执行单元。可以由一个或多个 SQL 语句组成，在同一个事务中，所有的 SQL 语句都成功执行时，整个事务成功，有一个 SQL 语句执行失败，整个事务都执行失败
+
+### 事务的边界
+* 开始：连接到数据库，执行一条 DML 语句。上一个事务结束后，又输入了一条 DML 语句，即事务的开始
+* 结束：
+* 1、提交：显示提交 commit，隐式提交：一条创建、删除的语句，正常退出(客户端退出连接)
+* 2、回滚：显示回滚 rollback，隐式回滚：非正常退出（断电、宕机），执行了创建、删除的语句，但是失败了，会为这个无效的语句执行回滚
