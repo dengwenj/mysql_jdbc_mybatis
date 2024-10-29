@@ -582,3 +582,38 @@ CREATE view testview2 as (
 )
 SELECT * FROM testview2;
 ```
+
+### 视图的修改
+* 方式一：create or replace view 视图名 as 查询语句
+* 方式二：alter view 视图名 as 查询语句
+
+### 视图的删除
+* drop view 视图名
+* 删除视图不会影响原表
+```text
+-- 视图修改 
+CREATE OR REPLACE VIEW testview as (
+	SELECT EMPLOYEE_ID FROM t_employees
+);
+ALTER VIEW testview as (
+	SELECT EMPLOYEE_ID, FIRST_NAME FROM t_employees
+)
+-- 删除视图 
+DROP VIEW testview2;
+```
+
+### 视图的注意事项
+* 视图不会独立存储数据，原表发生改变，视图也发生改变。没有优化任何查询性能
+* 如果视图包含以下结构中的一种，则视图不可更新：
+* 1、聚合函数的结果
+* 2、DISTINCT 去重后的结果
+* 3、GROUP BY 分组后的结果
+* 4、HAVING 筛选过滤后的结果
+* 5、UNION、UNION ALL 联合后的结果
+
+### SQL 语言分类
+* 数据查询语言 DQL：select、where、order by、group by、having
+* 数据定义语言 DDL：create、alter、drop
+* 数据操作语言 DML：insert、update、delete
+* 事务处理语言 TPL：commit、rollback
+* 数据控制语言 DCL：grant、revoke
