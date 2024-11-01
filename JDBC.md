@@ -1,5 +1,8 @@
 ### 什么是 JDBC
 * JDBC(Java Database Connectivity) Java 连接数据库，可以使用 Java 语言连接数据库完成 CRUD 操作
+* JDBC是一套接口（面向接口写实现类，能够解耦合，提高代码的扩展力）是由Java语言编写的一堆接口和一些class类组成的一套工具类的程序。
+* 它仅仅是一套规范。也就是说JDBC并不能直接连接和操作数据库，真正连接和操作数据库的，是各大数据库服务商按照JDBC这套规范写出来的驱动Jar包，
+* JDBC和数据库驱动包的关系，就是接口与实现类的关系
 
 ### JDBC 核心思想
 * Java 中定义了访问数据库的接口，可以为多种关系型数据库提供统一的访问方式。由数据库厂商提供驱动实现类（Driver 数据库驱动）
@@ -76,4 +79,49 @@
             System.out.println("连接数据库失败");
         }
     }
+```
+
+### ResultSet(结果集)
+* 在执行查询 SQL 后，存放查询到的结果集数据
+
+### 接受结果集
+* ResultSet rs = statement.executeQuery(sql);
+
+### 遍历 ResultSet 中的数据
+* ResultSet 以表（table）结构进行临时结果的存储，需要通过 JDBC API 将其中数据进行一次获取
+* 每调用一次 next() 方法 ResultSet 的指针向下移动一个，结果为 true，表示当前行有数据
+* rs.getXXX(整数)：代表根据列的编号顺序获取，从 1 开始
+* rs.getXXX(列名)：代表根据列名获取
+```java
+public static void main(String[] args) throws Exception {
+    // 1、注册驱动
+    Class.forName("com.mysql.jdbc.Driver");
+    // 2、获取连接
+    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/companydb", "pumu", "123456");
+    // 3、创建语句
+    Statement statement = connection.createStatement();
+    // 4、执行 SQL
+    ResultSet resultSet = statement.executeQuery("select * from t_jobs");
+    // 5、执行结果
+    while (resultSet.next()) {
+        System.out.println("通过编号找:");
+        String jobId = resultSet.getString(1);
+        String jobTitle = resultSet.getString(2);
+        String minSalary = resultSet.getString(3);
+        String maxSalary = resultSet.getString(4);
+        System.out.println(jobId + ":" + jobTitle + ":" + minSalary + ":" + maxSalary);
+
+        System.out.println("通过列名找:");
+        String string = resultSet.getString("job_id");
+        String string1 = resultSet.getString("job_title");
+        String string2 = resultSet.getString("min_salary");
+        String string3 = resultSet.getString("max_salary");
+        System.out.println(string + ":" + string1 + ":" + string2 + ":" + string3);
+        System.out.println("------------------------------------");
+    }
+    // 6、释放资源
+    resultSet.close();
+    statement.close();
+    connection.close();
+}
 ```
