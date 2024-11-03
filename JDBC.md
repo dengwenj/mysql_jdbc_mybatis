@@ -131,3 +131,13 @@ public static void main(String[] args) throws Exception {
 
 ### 如何避免 SQL 注入
 * 由于编写的 SQL 语句是在用户输入数据，整合后再进行编译。所以为了避免 SQL 注入的问题，我们要使 SQL 语句在用户输入数据前就已进行编译成完整的 SQL 语句，再进行填充数据
+
+### PreparedStatement
+* PreparedStatement 继承了 Statement 接口，执行 SQL 语句的方法无异
+* 作用：1、预编译 SQL 语句，效率高
+* 2、安全，避免 SQL 注入
+* 3、可以动态的填充数据，执行多个同构的 SQL 语句
+
+### 参数标记
+* PreparedStatement pstmt = connt.prepareStatement("select * from user where username = ? and password = ?");
+* 注意：JDBC 中的所有参数都由 ? 符号占位，这被称为参数标记。在执行 SQL 语句之前，必须为每个参数提供值
