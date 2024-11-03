@@ -212,3 +212,22 @@ public class DBUtil {
     }
 }
 ```
+
+### 封装工具类(配置文件的形式)
+* 把可变的数据放入配置文件中，然后读取配置文件加载进来
+```properties
+driver=com.mysql.jdbc.Driver
+url=jdbc:mysql://localhost:3306/companydb
+user=pumu
+password=123456
+```
+
+### ORM
+* ORM(Object Relational Mapping)
+* 从数据库查询到的结果集(ResultSet)在进行遍历时，逐行遍历，取出的都是零散的数据。在实际应用开发中，我们需要将零散的数据进行封装整理
+
+### 实体类（entity）：零散数据的载体
+* 一行数据中，多个零散的数据进行整理
+* 通过 entity 的规则对表中的数据进行对象的封装
+* 表名=类名，列名=属性名，提供各个属性的 get、set 方法
+* 提供无参构造方法
