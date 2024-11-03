@@ -125,3 +125,9 @@ public static void main(String[] args) throws Exception {
     connection.close();
 }
 ```
+
+### SQL 注入问题
+* 什么是 SQL 注入：用户输入的数据中有 SQL 关键字或语法并且参与了 SQL 语句的编译，导致 SQL 语句编译后的条件含义为 true，一直得到正确的结果，这种现象称为 SQL 注入
+
+### 如何避免 SQL 注入
+* 由于编写的 SQL 语句是在用户输入数据，整合后再进行编译。所以为了避免 SQL 注入的问题，我们要使 SQL 语句在用户输入数据前就已进行编译成完整的 SQL 语句，再进行填充数据
