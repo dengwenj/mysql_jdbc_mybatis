@@ -141,3 +141,74 @@ public static void main(String[] args) throws Exception {
 ### 参数标记
 * PreparedStatement pstmt = connt.prepareStatement("select * from user where username = ? and password = ?");
 * 注意：JDBC 中的所有参数都由 ? 符号占位，这被称为参数标记。在执行 SQL 语句之前，必须为每个参数提供值
+```java
+public static void main(String[] args) throws Exception {
+        // 通过控制台用户输入用户名和密码
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入用户名:");
+        String username = scanner.next();
+        System.out.println("请输入密码:");
+        String password = scanner.next();
+
+        // 注入驱动
+        Class.forName("com.mysql.jdbc.Driver");
+        // 获取连接
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/companydb", "pumu", "123456");
+        // 获得 PreparedStatement 对象，预编译 SQL 语句
+        PreparedStatement preparedStatement = connection.prepareStatement("select * from user where username=? and password=?");
+        // ? 占位符
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            System.out.println("登录成功");
+        } else {
+            System.out.println("登录失败");
+        }
+
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+    }
+```
+
+### 封装工具类
+* 在实际 JDBC 的使用中，存在着大量的重复代码，列如数据库的连接，关闭数据库等
+* 我们需要把传统的 JDBC 代码进行重构，抽取出通用的 JDBC 工具类
+```java
+public class DBUtil {
+    private static final Connection connection;
+
+    static {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/companydb", "pumu", "123456");
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Connection getConnection() {
+        return connection;
+    }
+
+    public static void close(ResultSet rs, Statement stmt, Connection conn) {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (stmt != null) {
+                stmt.close();
+            }
+
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```

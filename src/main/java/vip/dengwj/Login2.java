@@ -1,5 +1,7 @@
 package vip.dengwj;
 
+import vip.dengwj.util.DBUtil;
+
 import java.sql.*;
 import java.util.Scanner;
 
@@ -12,10 +14,7 @@ public class Login2 {
         System.out.println("请输入密码:");
         String password = scanner.next();
 
-        // 注入驱动
-        Class.forName("com.mysql.jdbc.Driver");
-        // 获取连接
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/companydb", "pumu", "123456");
+        Connection connection = DBUtil.getConnection();
         // 获得 PreparedStatement 对象，预编译 SQL 语句
         PreparedStatement preparedStatement = connection.prepareStatement("select * from user where username=? and password=?");
         // ? 占位符
@@ -29,8 +28,6 @@ public class Login2 {
             System.out.println("登录失败");
         }
 
-        resultSet.close();
-        preparedStatement.close();
-        connection.close();
+        DBUtil.close(resultSet, preparedStatement, connection);
     }
 }
