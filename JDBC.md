@@ -223,7 +223,7 @@ password=123456
 ```
 
 ### ORM
-* ORM(Object Relational Mapping)
+* ORM(Object Relational Mapping) 对象关系映射
 * 从数据库查询到的结果集(ResultSet)在进行遍历时，逐行遍历，取出的都是零散的数据。在实际应用开发中，我们需要将零散的数据进行封装整理
 
 ### 实体类（entity）：零散数据的载体
@@ -231,3 +231,8 @@ password=123456
 * 通过 entity 的规则对表中的数据进行对象的封装
 * 表名=类名，列名=属性名，提供各个属性的 get、set 方法
 * 提供无参构造方法
+
+### DAO 数据访问对象（Data Access Object）
+* DAO 实现了业务逻辑与数据库访问相分离
+* 对同一张表的所有操作封装在 XxxDaoImpl 对象中
+* 根据增删改查的不同功能实现具体的方法（insert、update、delete、select、selectAll）
