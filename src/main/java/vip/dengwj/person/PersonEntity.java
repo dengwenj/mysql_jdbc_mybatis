@@ -24,6 +24,7 @@ public class PersonEntity {
     }
 
     public PersonEntity(Builder builder) {
+        this.id = builder.id;
         this.name = builder.name;
         this.age = builder.age;
         this.bornDate = builder.bornDate;
@@ -133,11 +134,17 @@ public class PersonEntity {
     }
 
     public static class Builder {
+        private Integer id;
         private String name;
         private Integer age;
         private Date bornDate;
         private String email;
         private String address;
+
+        public Builder id(Integer id) {
+            this.id = id;
+            return this;
+        }
 
         public Builder name(String name) {
             this.name = name;

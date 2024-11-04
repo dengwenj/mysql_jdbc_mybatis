@@ -1,8 +1,7 @@
 package vip.dengwj.person;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,18 +31,117 @@ public class PersonDaoImpl {
             DBUtil.close(null, preparedStatement, connection);
         }
     }
+
     // 更新
     public int update(PersonEntity person) {
-        return 0;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "update person set name = ?, age = ?, bornDate = ?, email = ?, address = ? where id = ?;";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, person.getName());
+            preparedStatement.setInt(2, person.getAge());
+            preparedStatement.setDate(3, null);
+            preparedStatement.setString(4, person.getEmail());
+            preparedStatement.setString(5, person.getAddress());
+            preparedStatement.setInt(6, person.getId());
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBUtil.close(null, preparedStatement, connection);
+        }
     }
+
     // 删除
     public int delete(int id) {
-        return 0;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "delete from person where id = ?;";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBUtil.close(null, preparedStatement, connection);
+        }
     }
+
+    // 查询单个
     public PersonEntity select(int id) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "select * from person where id = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int id1 = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int age = resultSet.getInt("age");
+                Date bornDate = resultSet.getDate("bornDate");
+                String email = resultSet.getString("email");
+                String address = resultSet.getString("address");
+
+                return new PersonEntity.Builder()
+                    .id(id1)
+                    .name(name)
+                    .age(age)
+                    .bornDate(bornDate)
+                    .email(email)
+                    .address(address)
+                    .build();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBUtil.close(resultSet, preparedStatement, connection);
+        }
         return null;
     }
+
+    // 查询多个
     public List<PersonEntity> selectAll() {
-        return null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "select * from person;";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+
+            List<PersonEntity> list = new ArrayList<>();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int age = resultSet.getInt("age");
+                Date bornDate = resultSet.getDate("bornDate");
+                String email = resultSet.getString("email");
+                String address = resultSet.getString("address");
+                list.add(
+                    new PersonEntity.Builder()
+                        .id(id)
+                        .name(name)
+                        .age(age)
+                        .bornDate(bornDate)
+                        .email(email)
+                        .address(address)
+                        .build()
+                );
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBUtil.close(resultSet, preparedStatement, connection);
+        }
     }
 }
