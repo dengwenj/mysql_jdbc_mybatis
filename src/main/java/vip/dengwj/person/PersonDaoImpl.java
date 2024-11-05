@@ -20,7 +20,7 @@ public class PersonDaoImpl {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, person.getName());
             preparedStatement.setInt(2, person.getAge());
-            preparedStatement.setDate(3, null);
+            preparedStatement.setDate(3, DateUtil.utilDateToSqlDate(person.getBornDate()));
             preparedStatement.setString(4, person.getEmail());
             preparedStatement.setString(5, person.getAddress());
 

@@ -14,10 +14,11 @@ public class Test {
     public static void insert() {
         PersonDaoImpl personDao = new PersonDaoImpl();
         PersonEntity personEntity = new PersonEntity.Builder()
-            .name("pumu")
-            .age(24)
-            .email("33222@qq.com")
-            .address("上海市浦东新区")
+            .name("王小波")
+            .age(18)
+            .bornDate(DateUtil.stringToUtilDate("1977-01-21"))
+            .email("9999@qq.com")
+            .address("北京市朝阳区")
             .build();
         int res = personDao.insert(personEntity);
         if (res == 1) {
@@ -35,7 +36,7 @@ public class Test {
                 .name("李雷")
                 .age(23)
                 .email("1111@qq.com")
-                .bornDate(null)
+                .bornDate(DateUtil.stringToUtilDate("1999-09-09"))
                 .address("上海市浦东新区")
                 .build()
         );
@@ -70,7 +71,7 @@ public class Test {
         for (PersonEntity personEntity : selectAll) {
             System.out.println(personEntity);
             if (personEntity.getBornDate() != null) {
-                System.out.println(personEntity.getBornDate().toString());
+                System.out.println(DateUtil.utilDateToString(personEntity.getBornDate()));
             }
         }
     }
