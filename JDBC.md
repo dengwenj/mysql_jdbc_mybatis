@@ -290,3 +290,15 @@ public static void main(String[] args) throws Exception {
         System.out.println("该用户名已注册");
     }
 ```
+
+### 当转账程序出现异常，事务控制成功了吗?
+* 解决方案1：传递 Connection
+* 为了解决线程中 Connection 对象不同步的问题，可以将 Connection 对象通过 service 传递给各个 DAO 方法
+* 传递的问题：
+* 1、如果使用传递 Connection，容易造成接口污染
+* 2、定义接口是为了更容易更换实现，而将 Connection 定义在接口中，会造成污染当前接口
+
+### 解决方案2：ThreadLocal
+* 可以将整个线程中（单线程）中，存储一个共享值
+* 线程拥有一个类似 Map 的属性，键值对结构 《ThreadLocal 对象, 值》
+* ThreadLocal 应用：一个线程共享同一个 threadLocal，在整个流程中任一环节可以存值或取值
