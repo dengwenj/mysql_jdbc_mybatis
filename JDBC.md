@@ -267,3 +267,26 @@ public static void main(String[] args) throws Exception {
         System.out.println(sqlDate);
     }
 ```
+
+### Service 业务逻辑层
+* 什么是业务：代表用户完成的一个业务功能，可以由一个或多个 DAO 的调用组层
+```java
+// 注册
+    public void register(PersonEntity person) {
+        PersonDaoImpl personDao = new PersonDaoImpl();
+        // 先查询用户是否存在
+        PersonEntity p = personDao.select(person.getName());
+        if (p == null) {
+            // 不存在新增
+            int insert = personDao.insert(person);
+            if (insert == 1) {
+                System.out.println("注册成功");
+            } else {
+                System.out.println("注册失败");
+            }
+            return;
+        }
+        // 存在返回该用户名已注册
+        System.out.println("该用户名已注册");
+    }
+```

@@ -144,4 +144,40 @@ public class PersonDaoImpl {
             DBUtil.close(resultSet, preparedStatement, connection);
         }
     }
+
+    public PersonEntity select(String name) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DBUtil.getConnection();
+            preparedStatement = connection.prepareStatement("select * from person where name = ?;");
+            preparedStatement.setString(1, name);
+            resultSet = preparedStatement.executeQuery();
+
+            PersonEntity person = null;
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String pName = resultSet.getString("name");
+                int age = resultSet.getInt("age");
+                Date bornDate = resultSet.getDate("bornDate");
+                String email = resultSet.getString("email");
+                String address = resultSet.getString("address");
+
+                person = new PersonEntity.Builder()
+                    .id(id)
+                    .name(pName)
+                    .age(age)
+                    .bornDate(bornDate)
+                    .email(email)
+                    .address(address)
+                    .build();
+            }
+            return person;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBUtil.close(resultSet, preparedStatement, connection);
+        }
+    }
 }

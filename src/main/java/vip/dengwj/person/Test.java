@@ -8,7 +8,8 @@ public class Test {
         //update();
         //delete();
         //select();
-        selectAll();
+        //selectAll();
+        register();
     }
 
     public static void insert() {
@@ -74,5 +75,18 @@ public class Test {
                 System.out.println(DateUtil.utilDateToString(personEntity.getBornDate()));
             }
         }
+    }
+
+    public static void register() {
+        PersonServiceImpl personService = new PersonServiceImpl();
+        personService.register(
+            new PersonEntity.Builder()
+                .name("明兰")
+                .age(18)
+                .bornDate(DateUtil.stringToUtilDate("2006-01-21"))
+                .email("7777@qq.com")
+                .address("重庆市")
+                .build()
+        );
     }
 }
