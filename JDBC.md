@@ -236,3 +236,34 @@ password=123456
 * DAO 实现了业务逻辑与数据库访问相分离
 * 对同一张表的所有操作封装在 XxxDaoImpl 对象中
 * 根据增删改查的不同功能实现具体的方法（insert、update、delete、select、selectAll）
+
+### Date 工具类
+* 数据库存储的数据类型为 java.sql.Date，而 java 应用层存储日期类型为 java.util.Date。需要进行转换
+
+### java.util.Date
+* Java 语言常规应用层面的日期类型，可以通过字符串创建对应的时间对象
+* 无法直接通过 JDBC 插入到数据库
+
+### java.sql.Date
+* 不可以通过字符串创建对应的时间对象，只能通过毫秒值创建对象
+* 可以直接通过 JDBC 插入到数据库
+
+### SimpleDateFormat
+* 格式化和解析日期的具体类。允许进行格式化（日期 -> 文本）、解析（文本 -> 日期）和规范化
+```java
+public static void main(String[] args) throws Exception {
+        String date = "2024-11-05";
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // 转换成 util data
+        Date parse = simpleDateFormat.parse(date);
+        System.out.println("parse -> " + parse); // parse -> Tue Nov 05 00:00:00 CST 2024
+
+        String format = simpleDateFormat.format(parse);
+        System.out.println("format -> " + format); // 2024-11-05
+
+        // 转换成 sql date
+        java.sql.Date sqlDate = new java.sql.Date(parse.getTime());
+        System.out.println(sqlDate);
+    }
+```
