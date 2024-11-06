@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AccountDaoImpl {
+public class AccountDaoImpl implements AccountDao {
     public int insert(Account account) {
         return 0;
     }

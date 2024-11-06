@@ -1,12 +1,9 @@
 package vip.dengwj.account;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 public class AccountServiceImpl {
     public void transfer(String fromNo, String password, String toNo, double amount) {
         // 验证 fromNo 是否存在
-        AccountDaoImpl accountDao = new AccountDaoImpl();
+        AccountDao accountDao = new AccountDaoImpl();
         Account select = accountDao.select(fromNo);
 
         try {

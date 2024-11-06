@@ -319,3 +319,11 @@ public static Connection getConnection() throws SQLException {
         return connection;
     }
 ```
+
+### 三层架构
+* 1、表示层
+* 命名：XXXView。职责：收集用户的数据和需求、展示数据
+* 2、业务逻辑层
+* 命名：XXXServiceImpl。职责：数据加工处理、调用 DAO 完成业务实现、控制事务
+* 3、数据访问层
+* 命名：XXXDaoImpl。职责：向业务层提供数据，将业务层加工后的数据同步到数据库
