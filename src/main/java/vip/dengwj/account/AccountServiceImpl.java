@@ -1,6 +1,6 @@
 package vip.dengwj.account;
 
-public class AccountServiceImpl {
+public class AccountServiceImpl implements AccountSercice {
     public void transfer(String fromNo, String password, String toNo, double amount) {
         // 验证 fromNo 是否存在
         AccountDao accountDao = new AccountDaoImpl();
