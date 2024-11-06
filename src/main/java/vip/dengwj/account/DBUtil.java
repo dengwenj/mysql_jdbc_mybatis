@@ -24,6 +24,7 @@ public class DBUtil {
         }
     }
 
+    // 连接
     public static Connection getConnection() throws SQLException {
         // 将当前线程中绑定的 Connection 对象赋值给 connection
         Connection connection = threadLocal.get();
@@ -39,6 +40,44 @@ public class DBUtil {
         return connection;
     }
 
+    // 开启事务
+    public static void begin() {
+        Connection connection;
+        try {
+            connection = getConnection();
+            // 设置当前事务的自动提交为手动提交。开启事务
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // 提交事务
+    public static void commit() {
+        Connection connection = null;
+        try {
+            connection = getConnection();
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(null, null, connection);
+        }
+    }
+
+    // 回滚事务
+    public static void rollback() {
+        Connection connection = null;
+        try {
+            connection = getConnection();
+            connection.rollback();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(null, null, connection);
+        }
+    }
+
     public static void close(ResultSet rs, Statement stmt, Connection conn) {
         try {
             if (rs != null) {
@@ -51,6 +90,8 @@ public class DBUtil {
 
             if (conn != null) {
                 conn.close();
+                // 关闭连接后，移除已关闭 connection 对象
+                threadLocal.remove();
             }
         } catch (SQLException e) {
             e.printStackTrace();

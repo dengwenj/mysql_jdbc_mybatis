@@ -9,11 +9,9 @@ public class AccountServiceImpl {
         AccountDaoImpl accountDao = new AccountDaoImpl();
         Account select = accountDao.select(fromNo);
 
-        Connection connection = null;
         try {
-            connection = DBUtil.getConnection();
-            // 设置当前事务的自动提交为手动提交。开启事务
-            connection.setAutoCommit(false);
+            // 开启事务
+            DBUtil.begin();
 
             if (select == null) {
                 // 不存在
@@ -57,18 +55,12 @@ public class AccountServiceImpl {
             }
             System.out.println("转账成功");
             // 提交事务
-            connection.commit();
+            DBUtil.commit();
         } catch (Exception e) {
             System.out.println("转账失败");
-            try {
-                // 回滚事务
-                connection.rollback();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            // 回滚事务
+            DBUtil.rollback();
             e.printStackTrace();
-        } finally {
-            DBUtil.close(null, null, connection);
         }
     }
 }
