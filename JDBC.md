@@ -299,6 +299,23 @@ public static void main(String[] args) throws Exception {
 * 2、定义接口是为了更容易更换实现，而将 Connection 定义在接口中，会造成污染当前接口
 
 ### 解决方案2：ThreadLocal
-* 可以将整个线程中（单线程）中，存储一个共享值
+* 可以将整个线程中（单线程）中，存储一个共享值。一个线程中可以存储多个ThreadLocal，存在ThreadLocalMap中
 * 线程拥有一个类似 Map 的属性，键值对结构 《ThreadLocal 对象, 值》
 * ThreadLocal 应用：一个线程共享同一个 threadLocal，在整个流程中任一环节可以存值或取值
+```java
+private static final ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
+public static Connection getConnection() throws SQLException {
+        // 将当前线程中绑定的 Connection 对象赋值给 connection
+        Connection connection = threadLocal.get();
+
+        String url = properties.getProperty("url");
+        String user = properties.getProperty("user");
+        String password = properties.getProperty("password");
+        if (connection == null) {
+            connection = DriverManager.getConnection(url, user, password);
+            // 把连接存在当前线程共享中
+            threadLocal.set(connection);
+        }
+        return connection;
+    }
+```

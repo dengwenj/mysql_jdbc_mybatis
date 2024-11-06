@@ -7,6 +7,7 @@ import java.util.Properties;
 
 public class DBUtil {
     private static final Properties properties;
+    // 一个线程共享同一个 threadLocal
     private static final ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
 
     static {
