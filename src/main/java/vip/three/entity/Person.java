@@ -1,5 +1,7 @@
 package vip.three.entity;
 
+import java.util.Date;
+
 /**
  * @date 2024/11/6 23:33
  * @author 朴睦
@@ -9,14 +11,17 @@ public class Person {
     private Integer id;
     private String name;
     private Integer age;
+    private Date bornDate;
+    private String email;
+    private String address;
 
-    public Person() {
-    }
-
-    public Person(Integer id, String name, Integer age) {
+    public Person(Integer id, String name, Integer age, Date bornDate, String email, String address) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.bornDate = bornDate;
+        this.email = email;
+        this.address = address;
     }
 
     /**
@@ -67,7 +72,56 @@ public class Person {
         this.age = age;
     }
 
+    /**
+     * 获取
+     *
+     * @return bornDate
+     */
+    public Date getBornDate() {
+        return bornDate;
+    }
+
+    /**
+     * 设置
+     * @param bornDate
+     */
+    public void setBornDate(Date bornDate) {
+        this.bornDate = bornDate;
+    }
+
+    /**
+     * 获取
+     * @return email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * 设置
+     * @param email
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * 获取
+     * @return address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * 设置
+     * @param address
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String toString() {
-        return "Person{id = " + id + ", name = " + name + ", age = " + age + "}";
+        return "PersonEntity{id = " + id + ", name = " + name + ", age = " + age + ", bornDate = " + bornDate + ", email = " + email + ", address = " + address + "}";
     }
 }
