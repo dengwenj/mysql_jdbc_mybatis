@@ -327,3 +327,33 @@ public static Connection getConnection() throws SQLException {
 * 命名：XXXServiceImpl。职责：数据加工处理、调用 DAO 完成业务实现、控制事务
 * 3、数据访问层
 * 命名：XXXDaoImpl。职责：向业务层提供数据，将业务层加工后的数据同步到数据库
+
+### Druid 连接池
+* 在程序初始化时，预先创建指定数量的数据库连接对象存储在池中，当需要连接数据库时，从连接池中取出现有连接，
+* 使用完毕后，也不会进行关闭，而是放回池中，实现复用，节省资源
+```java
+public class DBUtil {
+    // 声明连接池对象
+    private static final DruidDataSource dataSource;
+
+    static {
+        Properties prop = new Properties();
+        InputStream is = DBUtil.class.getResourceAsStream("/database.properties");
+        try {
+            prop.load(is);
+            dataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(prop);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // 获取连接
+    public static Connection getConnection() {
+        try {
+            return dataSource.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
