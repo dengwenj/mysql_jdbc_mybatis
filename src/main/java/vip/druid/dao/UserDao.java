@@ -10,4 +10,6 @@ public interface UserDao {
     int deleteUser(Integer id);
     User selectUser(Integer id);
     List<User> selectUsers();
+
+    long selectUserCount();
 }
