@@ -357,3 +357,20 @@ public class DBUtil {
     }
 }
 ```
+
+### Apache 的 DbUtils 使用
+* Commons DbUtils 是 Apache 组织提供的一个对 JDBC 进行简单封装的开源工具类库，使用它能够简化 JDBC 应用程序的开发
+
+### DbUtils 简介
+* DbUtils 是 java 变成中数据库操作实用小工具，小巧，简单，实用
+* 对于数据库的查询操作，可以把结果转换为 List、Array、Set等集合，便于操作
+* 对于数据库的 DML 操作，也变得很简单（只需要写 SQL 语句）
+
+### DbUtils 主要包含
+* ResultSetHandler 接口：转换类型接口
+* BeanHandler 类：实现类，把一条记录转换成对象
+* BeanListHandler 类：实现类，把多条记录转换成 List 集合
+* ScalarHandler 类：实现类，适合获取一行一列的数据
+* QueryRunner：执行 sql 语句的类
+* 增删改：update()
+* 查询：query()

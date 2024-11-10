@@ -3,6 +3,7 @@ package vip.druid;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
+import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -30,5 +31,9 @@ public class DBUtil {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static DataSource getDataSource() {
+        return dataSource;
     }
 }
